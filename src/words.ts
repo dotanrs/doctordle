@@ -2317,10 +2317,14 @@ export const WORD_BANK: string[] = [
   'ZONAL',
 ];
 
-// Pick 8 random words for a new game
+// Pick 8 random words for a new game (Fisher-Yates shuffle)
 export function getRandomTargetWords(): string[] {
-  const shuffled = [...WORD_BANK].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, 8);
+  const words = [...WORD_BANK];
+  for (let i = words.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [words[i], words[j]] = [words[j], words[i]];
+  }
+  return words.slice(0, 8);
 }
 
 // Simple hash function for strings
